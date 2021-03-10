@@ -1,27 +1,54 @@
 .spacing {
-    padding: 15px 0;
+  padding: 15px 0;
 }
 
-
 .instructions h3 {
-    text-align: center;
+  text-align: center;
 }
 
 .instructions ol {
-    width: 40%;
-    margin: 0 auto;
+  width: 40%;
+  margin: 0 auto;
 }
 
 .timer {
-    text-align: center;
-    font-weight: bold;
-    font-size: 80px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 80px;
 }
 
 .action-buttons {
-    text-align: center;
+  text-align: center;
 }
 
 .action-buttons .btn + .btn {
-    margin-left: 15px;
+  margin-left: 15px;
+}
+
+tr.active {
+  background: green;
+  color: '#fff';
+}
+
+tr.completed {
+  text-decoration: line-through;
+  background: gray;
+}
+
+.deleteBtn {
+  background-color: red;
+  border: none;
+  color: white;
+  padding: 12px 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.deleteBtn:hover {
+  background-color: darkred;
+  border: none;
+  color: white;
+  padding: 12px 16px;
+  font-size: 16px;
+  cursor: pointer;
 }

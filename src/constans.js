@@ -1,3 +1,3 @@
-export const API_URL = 'https://6032450ea223790017aced0a.mockapi.io/tasks';
-export const POMODORO_WORK = 25;
-export const POMODORO_BREAK = 5;
+export const API_URL = 'https://603249f4a223790017acedab.mockapi.io/tasks';
+export const POMODORO_WORK = 0.2;
+export const POMODORO_BREAK = 0.1;

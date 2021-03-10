@@ -1,4 +1,4 @@
-import { getDataFromApi, addTaskToApi } from './data';
+import { getDataFromApi, addTaskToApi, removeTaskToApi } from './data';
 import { POMODORO_BREAK, POMODORO_WORK } from './constans';
 import { getNow, addMinutes, getTimeRemaining } from './helpers/date';
 
@@ -15,6 +15,7 @@ class PomodoroApp {
     this.$tableTbody = document.querySelector(tableTbodySelector);
     this.$taskForm = document.querySelector(taskFormSelector);
     this.$taskFormInput = this.$taskForm.querySelector('input');
+    this.$addTaskButton = this.$taskForm.querySelector('button');
     this.$startButton = document.querySelector(startButtonSelector);
     this.$pauseButton = document.querySelector(pauseButtonSelector);
     this.$timerEl = document.querySelector(timerSelector);
@@ -25,21 +26,48 @@ class PomodoroApp {
   }
 
   addTask(task) {
+    this.$addTaskButton.textContent = 'ekleniyor';
+    this.$addTaskButton.disabled = true;
+    this.$taskFormInput.placeholder = 'ekleniyor';
+    this.$taskFormInput.value = 'ekleniyor';
+    this.$taskFormInput.disabled = true;
     addTaskToApi(task)
       .then((data) => data.json())
       .then((newTask) => {
         this.data = [...this.data, newTask];
         this.addTaskToTable(newTask);
+        this.$addTaskButton.disabled = false;
+        this.$addTaskButton.textContent = 'Add Task';
+        this.$taskFormInput.disabled = false;
+        this.$taskFormInput.placeholder = 'Task Title';
       });
+  }
+
+  deleteTask(id) {
+    removeTaskToApi(id)
+      .then((id) => id)
+      .catch((err) => alert(err));
   }
 
   addTaskToTable(task, index) {
     const $newTaskEl = document.createElement('tr');
     $newTaskEl.setAttribute('data-taskId', `task${task.id}`);
     $newTaskEl.classList.add('task');
-    $newTaskEl.innerHTML = `<th scope="row">${task.id}</th><td>${task.title}</td>`;
+    //$newTaskEl.id = `data-selectedTr-${index}`;
+    $newTaskEl.innerHTML = `<th scope="row">${task.id}</th><td>${task.title}
+    </td><td><button type="click" class="deleteBtn">
+    <i class="fa fa-trash"></i></button></td></div>`;
     this.$tableTbody.appendChild($newTaskEl);
     this.$taskFormInput.value = '';
+
+    const btnAtt = $newTaskEl.lastChild.firstChild;
+    let removeBtn = btnAtt.addEventListener('click', (e) => {
+      $newTaskEl.remove();
+      this.deleteTask(task.id);
+    });
+    return {
+      removeBtn,
+    };
   }
 
   handleAddTask() {
@@ -50,9 +78,17 @@ class PomodoroApp {
     });
   }
 
+  handleRemoveTask() {
+    let removeBtn = btnAtt.addEventListener('click', (e) => {
+      $newTaskEl.remove();
+      this.deleteTask(task);
+      this.getDataFromApi();
+    });
+  }
+
   fillTasksTable() {
     getDataFromApi().then((currentTasks) => {
-      this.data = currentTasks;
+      //this.data = currentTasks;                   // bu aktif olabilir
       currentTasks.forEach((task, index) => {
         this.addTaskToTable(task, index + 1);
       });
