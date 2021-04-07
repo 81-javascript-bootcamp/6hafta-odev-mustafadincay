@@ -3,7 +3,7 @@ export const getNow = () => {
 };
 
 /* istanbul ignore next */
-export const getTimeRemaining = (endtime) => {
+export const getTimeRemainingDate = (endtime) => {
   const total = Date.parse(endtime) - Date.parse(new Date());
   const seconds = Math.floor((total / 1000) % 60);
   const minutes = Math.floor((total / 1000 / 60) % 60);
@@ -14,6 +14,6 @@ export const getTimeRemaining = (endtime) => {
   };
 };
 
-export const addMinutes = (date, minutes) => {
+export const addMinutesToDate = (date, minutes) => {
   return new Date(date.getTime() + minutes * 60000);
 };

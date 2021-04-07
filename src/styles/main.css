@@ -33,6 +33,7 @@ tr.active {
 tr.completed {
   text-decoration: line-through;
   background: gray;
+  color: '#000';
 }
 
 .deleteBtn {
